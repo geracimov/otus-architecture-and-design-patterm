@@ -1,8 +1,10 @@
 package ru.geracimov.otus.architecture_design_patterns.square_equation;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class SquareEquationTest {
 
@@ -15,7 +17,13 @@ class SquareEquationTest {
 
     @Test
     void squareEquationRunTest() {
-        Assertions.assertNotNull(squareEquation.solve(1.0, 2.0, 3.0));
+        assertNotNull(squareEquation.solve(1.0, 2.0, 3.0));
+    }
+
+    @Test
+    @DisplayName("тест, который проверяет, что для уравнения x^2+1 = 0 корней нет (возвращается пустой массив)")
+    void squareEquationHasNoRootsTest() {
+        assertArrayEquals(new double[]{}, squareEquation.solve(1.0, 0.0, 1.0));
     }
 
 }
