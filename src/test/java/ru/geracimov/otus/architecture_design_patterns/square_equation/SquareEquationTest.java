@@ -3,6 +3,7 @@ package ru.geracimov.otus.architecture_design_patterns.square_equation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,6 +40,13 @@ class SquareEquationTest {
     void quadraticEquationHasOneRootsOfMultiplicity2Test() {
         double[] roots = squareEquation.solve(1.0, 2.0, 1.0);
         assertArrayEquals(new double[]{-1.0, -1.0}, roots);
+    }
+
+    @Test
+    @DisplayName("тест, который проверяет, что коэффициент a не может быть равен 0")
+    void coefficientCannotBe0Test() {
+        Executable solveWithAis0 = () -> squareEquation.solve(0.0, 2.0, 1.0);
+        assertThrows(IllegalArgumentException.class, solveWithAis0);
     }
 
 }
