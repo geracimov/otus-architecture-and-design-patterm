@@ -43,6 +43,14 @@ class SquareEquationTest {
     }
 
     @Test
+    @DisplayName("тест, который проверяет, что для уравнения x^2+2x+1 = 0 есть один корень кратности 2 (x1= x2 = -1) с заданным eps")
+    void quadraticEquationHasOneRootsOfMultiplicity2TestWithEps() {
+        squareEquation = new SquareEquation(1e-10);
+        double[] roots = squareEquation.solve(1.0, 2.0, 1.0);
+        assertArrayEquals(new double[]{-1.0, -1.0}, roots);
+    }
+
+    @Test
     @DisplayName("тест, который проверяет, что коэффициент a не может быть равен 0")
     void coefficientCannotBe0Test() {
         Executable solveWithAis0 = () -> squareEquation.solve(0.0, 2.0, 1.0);
