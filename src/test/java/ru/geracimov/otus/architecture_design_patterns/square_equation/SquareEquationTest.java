@@ -53,6 +53,17 @@ class SquareEquationTest {
     }
 
     @Test
+    @DisplayName("тест, который проверяет, что для уравнения 0.01x^2+0.1x+0.000001 = 0 есть два кореня кратности 2 (x1= x2 = -1) и она верны в рамках заданного eps")
+    void quadraticEquationHasRootsAndDiscriminantLessThanEps() {
+        double eps = 1e-2;
+        var validator = new ArgumentValidatorImpl(eps);
+        squareEquation = new SquareEquation(validator);
+        double[] roots = squareEquation.solve(0.01, 0.1, 0.000001);
+        assertEquals(-0.00001, roots[0], eps);
+        assertEquals(-9.99, roots[1], eps);
+    }
+
+    @Test
     @DisplayName("тест, который проверяет, что коэффициент a не может быть равен 0")
     void coefficientCannotBe0Test() {
         Executable solveWithAis0 = () -> squareEquation.solve(0.0, 2.0, 1.0);
