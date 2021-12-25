@@ -13,7 +13,8 @@ class SquareEquationTest {
 
     @BeforeEach
     void setUp() {
-        squareEquation = new SquareEquation();
+        ArgumentValidator validator = new ArgumentValidatorImpl();
+        squareEquation = new SquareEquation(validator);
     }
 
     @Test
@@ -45,7 +46,8 @@ class SquareEquationTest {
     @Test
     @DisplayName("тест, который проверяет, что для уравнения x^2+2x+1 = 0 есть один корень кратности 2 (x1= x2 = -1) с заданным eps")
     void quadraticEquationHasOneRootsOfMultiplicity2TestWithEps() {
-        squareEquation = new SquareEquation(1e-10);
+        var validator = new ArgumentValidatorImpl(1e-10);
+        squareEquation = new SquareEquation(validator);
         double[] roots = squareEquation.solve(1.0, 2.0, 1.0);
         assertArrayEquals(new double[]{-1.0, -1.0}, roots);
     }
@@ -55,6 +57,27 @@ class SquareEquationTest {
     void coefficientCannotBe0Test() {
         Executable solveWithAis0 = () -> squareEquation.solve(0.0, 2.0, 1.0);
         assertThrows(IllegalArgumentException.class, solveWithAis0);
+    }
+
+    @Test
+    @DisplayName("тест, который проверяет, что коэффициенты не могут быть NaN")
+    void coefficientCannotBeNanTest() {
+        Executable solveWithAisNan = () -> squareEquation.solve(Double.NaN, Double.NaN, Double.NaN);
+        assertThrows(IllegalArgumentException.class, solveWithAisNan);
+    }
+
+    @Test
+    @DisplayName("тест, который проверяет, что коэффициенты не могут быть NEGATIVE_INFINITY")
+    void coefficientCannotBeNegInfTest() {
+        Executable solveWithAisNegInf = () -> squareEquation.solve(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
+        assertThrows(IllegalArgumentException.class, solveWithAisNegInf);
+    }
+
+    @Test
+    @DisplayName("тест, который проверяет, что коэффициенты не могут быть POSITIVE_INFINITY")
+    void coefficientCannotBePosInfTest() {
+        Executable solveWithAisPosInf = () -> squareEquation.solve(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+        assertThrows(IllegalArgumentException.class, solveWithAisPosInf);
     }
 
 }
